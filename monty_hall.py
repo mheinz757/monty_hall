@@ -3,7 +3,7 @@ import sys
 
 if __name__ == "__main__":
     n = 10
-    print(f"There are {n} doors in front of you, labeled 0 through {n-1}.\nBehind one of them is a car, while the other {n-1} have goats behind them.")
+    print(f"There are {n} doors in front of you, labeled 0 through {n-1}.\nBehind one of them is a car, while the other {n-1} have goats behind them.", end = "\n\n")
 
     # create a set of all doors
     idxs = set(range(n))
@@ -14,14 +14,18 @@ if __name__ == "__main__":
 
     # get the user_idx
     # user_idx = random.randint(0, n-1)
-    print(f"Which door would you like to select? Choose an integer between 0 and {n-1}.")
-    print(f"door> ", end = "")
-    user_idx = int(input())
-    while user_idx not in range(n):
-        print(f"Error: the door chosen must be an integer between 0 and {n-1}.")
+    while True:
         print(f"Which door would you like to select? Choose an integer between 0 and {n-1}.")
-        print(f"door> ", end = "")
-        user_idx = int(input())
+        try:
+            user_idx = int(input("door> "))
+        except ValueError:
+            print(f"\nError: the door chosen must be an integer between 0 and {n-1}.")
+        else:
+            if user_idx not in range(n):
+                print(f"\nError: the door chosen must be an integer between 0 and {n-1}.")
+            else:
+                print("")
+                break
     
     # remove user_idx from idxs
     if user_idx in idxs:
@@ -54,29 +58,24 @@ if __name__ == "__main__":
     # Update user on remaining doors
     print("There are two doors remaining: ", end = "")
     print(*idxs, sep = " and ", end = ".\n")
-    print(f"One of these has a car behind it and the other has a goat behind it.\nYou can either choose to stay with your original choice ({user_idx}) or switch to the other door.")
+    print(f"One of these has a car behind it and the other has a goat behind it.\nYou can either choose to stay with your original choice ({user_idx}), switch to the other door, or exit the program.", end = "\n\n")
 
     # let the user select a strategy
-    print("Which strategy would you like to choose?")
-    print("switch) Switch to the other door")
-    print("stay) Stay with original choice")
-    print("exit) Exit the program")
-    print("switch/stay/exit> ", end = "")
-    strategy = input().strip().lower()
-    if strategy == "exit":
-        print("Exiting...")
-        sys.exit()
-    while strategy not in ["switch", "stay"]:
-        print("Error: strategy must be either \"switch\" or \"stay\".")
+    while True:
         print("Which strategy would you like to choose?")
         print("switch) Switch to the other door")
         print("stay) Stay with original choice")
         print("exit) Exit the program")
-        print("switch/stay/exit> ", end = "")
-        strategy = input().strip().lower()
-        if strategy == "exit":
+        strategy = input("switch/stay/exit> ").strip().lower()
+        print("")
+
+        if strategy not in ["switch", "stay", "exit"]:
+            print("Error: input must be either \"switch\", \"stay\", or \"exit\".")
+        elif strategy == "exit":
             print("Exiting...")
             sys.exit()
+        else:
+            break
 
     # decide if you win or lose based on the users strategy
     if strategy == "switch":
