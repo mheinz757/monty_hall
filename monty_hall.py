@@ -2,7 +2,7 @@ import random
 import sys
 
 if __name__ == "__main__":
-    n = 10
+    n = 15
     print(f"There are {n} doors in front of you, labeled 0 through {n-1}.\nBehind one of them is a car, while the other {n-1} have goats behind them.", end = "\n\n")
 
     # create a set of all doors
@@ -38,7 +38,9 @@ if __name__ == "__main__":
     removed_idxs.sort()
 
     # Tell user which doors have been opened
-    if n >= 5:
+    if n > 10:
+        print(f"From the other {n-1} doors, the quiz master opens {n-2} doors, revealing a goat behind each one.")
+    elif n >= 5:
         print("The quiz master opens doors ", end = "")
         print(*removed_idxs[0:-1], sep = ", ", end = "")
         print(f", and {removed_idxs[-1]}, revealing a goat behind each one.")
@@ -58,7 +60,7 @@ if __name__ == "__main__":
     # Update user on remaining doors
     print("There are two doors remaining: ", end = "")
     print(*idxs, sep = " and ", end = ".\n")
-    print(f"One of these has a car behind it and the other has a goat behind it.\nYou can either choose to stay with your original choice ({user_idx}), switch to the other door, or exit the program.", end = "\n\n")
+    print(f"One of these has a car behind it and the other has a goat behind it.\nYou can either choose to stay with your original choice (door {user_idx}), switch to the other door, or exit the program.", end = "\n\n")
 
     # let the user select a strategy
     while True:
