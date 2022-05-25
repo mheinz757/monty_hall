@@ -38,10 +38,20 @@ if __name__ == "__main__":
     for i in removed_idxs:
         idxs.remove(i)
     removed_idxs.sort()
+
     # Tell user which doors have been opened
-    print("The quiz master opens doors ", end = "")
-    print(*removed_idxs[0:-1], sep = ", ", end = "")
-    print(f", and {removed_idxs[-1]}, revealing a goat behind each one.")
+    if n >= 5:
+        print("The quiz master opens doors ", end = "")
+        print(*removed_idxs[0:-1], sep = ", ", end = "")
+        print(f", and {removed_idxs[-1]}, revealing a goat behind each one.")
+    elif n == 4:
+        print("The quiz master opens doors ", end = "")
+        print(*removed_idxs, sep = " and ", end = "")
+        print(f", revealing a goat behind both.")
+    elif n == 3:
+        print("The quiz master opens door ", end = "")
+        print(*removed_idxs, end = "")
+        print(f", revealing a goat.")
 
     # get the list of the doors remaining
     idxs.add(car_idx)
@@ -50,7 +60,7 @@ if __name__ == "__main__":
     # Update user on remaining doors
     print("There are two doors remaining: ", end = "")
     print(*idxs, sep = " and ", end = ". ")
-    print("One of these has a car behind it and the other has a goat behind it. You can either choose to stay with your original choice or switch to the other door.")
+    print(f"One of these has a car behind it and the other has a goat behind it. You can either choose to stay with your original choice ({user_idx}) or switch to the other door.")
 
     # let the user select a strategy
     print("Which strategy would you like to choose: \"switch\" or \"stay\"? If you would like to exit, please type \"exit\".")
@@ -71,8 +81,8 @@ if __name__ == "__main__":
     # decide if you win or lose based on the users strategy
     if strategy == "switch":
         idxs.remove(user_idx)
-        print("You have switched to door " , end = "")
-        print(*idxs, end = ". ")
+        user_idx, = idxs
+        print(f"You have switched to door {user_idx}. " , end = "")
         if car_idx in idxs:
             print("This door opens... revealing a car. YOU WIN!")
         else:
